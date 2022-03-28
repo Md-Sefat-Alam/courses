@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Header />
 
-        <div className="contentBody">
+        <div className="contentBody wrapper">
           <Switch>
             <Route path="/services">
               <Services />
