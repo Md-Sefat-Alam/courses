@@ -8,7 +8,7 @@ const Login = () => {
     <div className="flex justify-center items-center mt-6">
       <div className="w-2/5">
         <ContentHeading text={"Login"} />
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="py-8">
             <p>
               Email:{" "}
@@ -16,7 +16,7 @@ const Login = () => {
                 className="border w-full px-2 py-1 rounded"
                 type="email"
                 name=""
-                id=""
+                id="loginEmail"
               />
             </p>
             <p>
@@ -25,7 +25,7 @@ const Login = () => {
                 className="border w-full px-2 py-1 rounded"
                 type="password"
                 name=""
-                id=""
+                id="loginPassword"
               />
             </p>
 

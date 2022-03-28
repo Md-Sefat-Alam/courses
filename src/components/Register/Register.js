@@ -8,7 +8,7 @@ const Register = () => {
     <div className="flex justify-center items-center mt-6">
       <div className="w-2/5">
         <ContentHeading text={"register"} />
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="py-8">
             <p>
               Email:{" "}
@@ -16,7 +16,7 @@ const Register = () => {
                 className="border w-full px-2 py-1 rounded"
                 type="email"
                 name=""
-                id=""
+                id="registerEmail"
               />
             </p>
             <p>
@@ -25,7 +25,7 @@ const Register = () => {
                 className="border w-full px-2 py-1 rounded"
                 type="password"
                 name=""
-                id=""
+                id="registerPassword"
               />
             </p>
             <div className="flex justify-between items-center py-5">
