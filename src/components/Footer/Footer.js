@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="fullWrapper bg-gray-500">
+    <footer className="fullWrapper bg-gray-200">
       <div className="wrapper">
         {/* <div>
             <div></div>

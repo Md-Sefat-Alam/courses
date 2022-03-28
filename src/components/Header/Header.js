@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <nav className="fullWrapper bg-gray-500">
+    <nav className="fullWrapper bg-gray-200">
       <div className="wrapper flex justify-between items-center">
         <div className="text-black font-extrabold text-3xl">
           Course'<span className="text-red-900">S</span>
@@ -23,7 +23,13 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <div>Login</div>
+        <div>
+          <button>
+            <NavLink activeClassName="font-bold" to="/login">
+              Login
+            </NavLink>
+          </button>
+        </div>
       </div>
     </nav>
   );

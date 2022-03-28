@@ -13,7 +13,7 @@ const Services = () => {
       <div>
         <ContentHeading text={"services"} />
       </div>
-      <div className="grid grid-rows-2 grid-flow-col gap-4">
+      <div className="grid grid-rows-2 grid-flow-col gap-4 py-5">
         {/*  */}
         {serviceData.map((service) => {
           const { id, name, duration, fee, img } = service;
