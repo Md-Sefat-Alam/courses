@@ -1,21 +1,24 @@
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
 import ContentHeading from "../ContentHeading/ContentHeading";
-import initializeAuthentication from "../Firebase/firebase.init";
+import useFirebase from "../Firebase/useFirebase";
 import GoogleSignInBtn from "../GoogleSignInBtn/GoogleSignInBtn";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const [inputData, setInputData] = useState({
     email: "",
     password: "",
   });
-  const [user, setUser] = useState({});
-  console.log(user);
+  const { signInWithEmailAndPassword, setUser, user, setError } = useAuth();
+  const location = useLocation();
+  const history = useHistory();
+  const redirect_uri = location.state?.from || "/home";
 
   const handleInputData = (type, e) => {
     switch (type) {
@@ -34,17 +37,17 @@ const Login = () => {
         break;
     }
   };
-  console.log(inputData);
   const handleLogin = (e) => {
     e.preventDefault();
-    initializeAuthentication();
     const auth = getAuth();
     signInWithEmailAndPassword(auth, inputData.email, inputData.password)
       .then((userCredential) => {
         setUser(userCredential.user);
+        history.push(redirect_uri);
+        e.target.reset();
       })
       .catch((error) => {
-        console.log(error.code);
+        setError(error.code);
       });
   };
   return (
@@ -86,7 +89,7 @@ const Login = () => {
               </p>
             </div>
           </div>
-          <GoogleSignInBtn setUser={setUser} />
+          <GoogleSignInBtn />
         </form>
       </div>
     </div>

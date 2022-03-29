@@ -1,18 +1,22 @@
 import React from "react";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import initializeAuthentication from "../Firebase/firebase.init";
+import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import useAuth from "../hooks/useAuth";
 
-const GoogleSignInBtn = ({ setUser }) => {
+const GoogleSignInBtn = () => {
+  const location = useLocation();
+  const history = useHistory();
+  const redirect_uri = location.state?.from || "/home";
+
+  const { signInUsingGoogle, setUser, setError } = useAuth();
   const handleGoogleSignIn = () => {
-    initializeAuthentication();
-    const googleProvider = new GoogleAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, googleProvider)
+    signInUsingGoogle()
       .then((result) => {
         setUser(result.user);
+        history.push(redirect_uri);
       })
       .catch((error) => {
-        console.log(error.code);
+        setError(error.code);
       });
   };
   return (

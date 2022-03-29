@@ -1,16 +1,10 @@
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  GoogleAuthProvider,
-} from "firebase/auth";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ContentHeading from "../ContentHeading/ContentHeading";
-import initializeAuthentication from "../Firebase/firebase.init";
 import GoogleSignInBtn from "../GoogleSignInBtn/GoogleSignInBtn";
+import useAuth from "../hooks/useAuth";
 
 const Register = () => {
   const [inputData, setInputData] = useState({
@@ -18,27 +12,22 @@ const Register = () => {
     email: "",
     password: "",
   });
-
-  const [user, setUser] = useState({});
-  const history = useHistory();
-
+  const { createUserWithEmailAndPassword, setUser, setError, auth } = useAuth();
   const handleRegister = (e) => {
     e.preventDefault();
-    initializeAuthentication();
-    // const googleProvider = new GoogleAuthProvider();
-    const auth = getAuth();
     createUserWithEmailAndPassword(auth, inputData.email, inputData.password)
       .then((userCredential) => {
         setUser(userCredential.user);
+        e.target.reset();
       })
       .catch((error) => {
-        console.log(error.code);
-        setUser({});
+        setError(error.code);
       });
   };
-  useEffect(() => {
-    user.accessToken && history.push("/login");
-  }, [user]);
+
+  //   useEffect(() => {
+  //     user.accessToken && history.push("/home");
+  //   }, [user]);
 
   const handleInputData = (type, e) => {
     switch (type) {
@@ -62,7 +51,6 @@ const Register = () => {
         break;
     }
   };
-  console.log(inputData);
   return (
     <div className="flex justify-center items-center mt-6">
       <div className="w-2/5">
@@ -112,7 +100,7 @@ const Register = () => {
               </p>
             </div>
           </div>
-          <GoogleSignInBtn setUser={setUser} />
+          <GoogleSignInBtn />
         </form>
       </div>
     </div>

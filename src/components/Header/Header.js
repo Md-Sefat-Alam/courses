@@ -1,7 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
+  const { user, setUser, logOut } = useAuth();
+
+  console.log(user);
+  const handleLogOut = () => {
+    logOut();
+  };
   return (
     <nav className="fullWrapper bg-gray-200">
       <div className="wrapper flex justify-between items-center">
@@ -23,11 +30,21 @@ const Header = () => {
           </ul>
         </div>
         <div>
-          <button>
+          {user.accessToken ? (
+            <div>
+              <span>{user.displayName ? user.displayName : user.email}</span>{" "}
+              <button
+                onClick={handleLogOut}
+                className="border border-gray-400 px-2 py-0 rounded text-gray-500 "
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
             <NavLink activeClassName="font-bold" to="/login">
               Login
             </NavLink>
-          </button>
+          )}
         </div>
       </div>
     </nav>
